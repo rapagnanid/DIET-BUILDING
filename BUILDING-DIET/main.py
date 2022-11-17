@@ -21,5 +21,4 @@ del df['% parte edule']
 del df['Amido (g)']
 print(df.head(5))
 
-print(df)
 print(df.describe())
