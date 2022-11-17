@@ -19,4 +19,4 @@ df.rename(columns = {'Alimenti':'Alimenti',
 df = df.dropna().reset_index(drop=True)
 del df['% parte edule']
 del df['Amido (g)']
-print(df.head(5))
+#print(df.head(5))
