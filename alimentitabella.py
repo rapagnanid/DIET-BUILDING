@@ -1,4 +1,5 @@
 # Import libraries
+import re
 import pandas as pd
 from tabula import read_pdf
 
@@ -16,7 +17,28 @@ df.rename(columns = {'Alimenti':'Alimenti',
                      'Glucidi\rdisponibili\r(g)':'Carboidrati (g)',
                      'Amido\r(g)':'Amido (g)'
                      }, inplace = True)
+
 df = df.dropna().reset_index(drop=True)
+
 del df['% parte edule']
 del df['Amido (g)']
-#print(df.head(5))
+
+df['Proteine (g)'] = df['Proteine (g)'].astype('string')
+df['Lipidi (g)'] = df['Lipidi (g)'].astype('string')
+df['Carboidrati (g)'] = df['Carboidrati (g)'].astype('string')
+
+df['Proteine (g)'] = df['Proteine (g)'].str.replace(',', '.')
+df['Lipidi (g)'] = df['Lipidi (g)'].str.replace(',', '.')
+df['Carboidrati (g)'] = df['Carboidrati (g)'].str.replace(',', '.')
+
+df['Proteine (g)'] = df['Proteine (g)'].astype('float')
+df['Lipidi (g)'] = df['Lipidi (g)'].astype('float')
+df['Carboidrati (g)'] = df['Carboidrati (g)'].astype('float')
+
+"""
+print(df['KCal'].dtypes)
+print(df['Proteine (g)'].dtypes)
+print(df['Lipidi (g)'].dtypes)
+print(df['Carboidrati (g)'].dtypes)
+print(df.head(5))
+"""
