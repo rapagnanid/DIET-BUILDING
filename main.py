@@ -1,33 +1,23 @@
 from introitocalorico import DailyCalorieIntake
 from alimentitabella import df
-import inquirer
 
-food_list = df['Alimenti'].to_list()
+name = input("Ciao, come ti chiami?: ")
 
-questions = [
-  inquirer.List('size',
-                message="Quale alimento vuoi considerare nel calcolo?",
-                choices=food_list,
-            ),
-]
-answers = inquirer.prompt(questions)
-print(answers["size"])
+food_list = df['Alimenti'].tolist()
 
-"""
-name = input("Come ti chiami?: ")
-food_name = input("Quale alimento vuoi considerare nel calcolo?: ")
-food_amount = float(input("Qual è la quantità di tale alimento che vuoi considerare nel calcolo? E.g. (g): "))
+user_input = input("Per favore, inserisci un alimento: ")
 
-name, age, score = input("Enter student's name, age and score separated by space:").split()
+filtered_food_list = filter(lambda x: x.startswith(user_input), food_list)
 
+if len(str(filtered_food_list)) > 1:
+    print('Ci sono una o più opzioni disponibili per questo alimento:'.format(user_input))
+    for index, name in enumerate(filtered_food_list):
+        print("{0}".format(name))
 
-entered_list = input("Enter a list of numbers separated by space: ").split()
-print('Intermediate_list: ',entered_list)
-
-num_list = list(map(int,entered_list))
+food_name = input('Per favore, inserisci nuovamente un alimento, scegliendo tra le possibili opzioni: ')
+food_amount = float(input("Qual è la quantità di tale alimento? E.g. (g): "))
 
 calorie_intake = DailyCalorieIntake(name)
 
 print(f"{calorie_intake.name} assumerà: ")
 print(calorie_intake.calculator(food_name, food_amount))
-"""
