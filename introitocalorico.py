@@ -1,17 +1,44 @@
 from alimentitabella import df
+import pandas as pd
 
 class DailyCalorieIntake:
     """
     Creates a calorie intake class.
     """
+    df_food_inputed = pd.DataFrame()
 
-    def __init__(self, name):
-        self.name = name
+    calorie = []
+    carboidrati = []
+    proteine = []
+    lipidi = []
 
-    def calculator(self, food_name, food_amount):
+    def __init__(self, user_name, food_list_name, food_list_amount):
+        self.user_name = user_name
+        self.food_list_name = food_list_name
+        self.food_list_amount = food_list_amount
 
-        alimento = df[df['Alimenti']==food_name]
+    def calculator(self):
 
-        alimento_nutrienti = alimento.loc[ : , alimento.columns != 'Alimenti']
+        self.df_food_inputed = pd.DataFrame({
+            'food_name': self.food_list_name,
+            'food_amount': self.food_list_amount
+        })
 
-        return alimento_nutrienti * food_amount / 100
+        for i in self.df_food_inputed['food_name']:
+            cal_count = df[df['Alimenti'] == self.df_food_inputed['food_name']]['KCal'] * self.df_food_inputed['food_amount'] / 100
+            self.calorie.append(cal_count)
+            carb_count = df[df['Alimenti'] == self.df_food_inputed['food_name']]['Carboidrati (g)'] * self.df_food_inputed['food_amount'] / 100
+            self.carboidrati.append(carb_count)
+            pro_count = df[df['Alimenti'] == self.df_food_inputed['food_name']]['Proteine (g)'] * self.df_food_inputed['food_amount'] / 100
+            self.proteine.append(pro_count)
+            lip_count = df[df['Alimenti'] == self.df_food_inputed['food_name']]['Proteine (g)'] * self.df_food_inputed['food_amount'] / 100
+            self.lipidi.append(lip_count)
+
+        return pd.DataFrame({
+                'KCal': sum(self.calorie),
+                'Carboidrati (g)': sum(self.carboidrati),
+                'Proteine (g)': sum(self.proteine),
+                'Lipidi (g)': sum(self.lipidi)
+            })
+
+
