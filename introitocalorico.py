@@ -1,4 +1,4 @@
-from alimentitabella import df
+from alimentitabella import df_def
 import pandas as pd
 
 class DailyCalorieIntake:
@@ -22,20 +22,22 @@ class DailyCalorieIntake:
     def calculator(self):
 
         for i in range(len(self.food_list_name)):
-            cal_count = df[df['Alimenti'] == self.food_list_name[i]]['KCal'] * self.food_list_amount[i] / 100
-            self.calorie.append(cal_count)
-            carb_count = df[df['Alimenti'] == self.food_list_name[i]]['Carboidrati (g)'] * self.food_list_amount[i] / 100
-            self.carboidrati.append(carb_count)
-            pro_count = df[df['Alimenti'] == self.food_list_name[i]]['Proteine (g)'] * self.food_list_amount[i] / 100
-            self.proteine.append(pro_count)
-            lip_count = df[df['Alimenti'] == self.food_list_name[i]]['Lipidi (g)'] * self.food_list_amount[i] / 100
-            self.lipidi.append(lip_count)
+            cal_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['KCal'] * self.food_list_amount[i]
+            carb_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['Carboidrati (g)'] * self.food_list_amount[i]
+            pro_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['Proteine (g)'] * self.food_list_amount[i]
+            lip_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['Lipidi (g)'] * self.food_list_amount[i]
+
+            calorie_totali = pd.DataFrame(self.calorie.append(cal_count)).sum(axis=0)
+            carboidrati_totali = pd.DataFrame(self.carboidrati.append(carb_count)).sum(axis=0)
+            proteine_totali = pd.DataFrame(self.proteine.append(pro_count)).sum(axis=0)
+            lipidi_totali = pd.DataFrame(self.lipidi.append(lip_count)).sum(axis=0)
+
 
         return pd.DataFrame({
-                'KCal': sum(self.calorie),
-                'Carboidrati (g)': sum(self.carboidrati),
-                'Proteine (g)': sum(self.proteine),
-                'Lipidi (g)': sum(self.lipidi)
+                'KCal': calorie_totali,
+                'Carboidrati (g)': carboidrati_totali,
+                'Proteine (g)': proteine_totali,
+                'Lipidi (g)': lipidi_totali
             })
 
 

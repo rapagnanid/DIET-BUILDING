@@ -1,4 +1,3 @@
-import pandas as pd
 from introitocalorico import DailyCalorieIntake
 from alimentitabella import df
 
@@ -24,12 +23,14 @@ while True:
 
     food_name = input('Per favore, inserisci nuovamente un alimento, scegliendo tra le possibili opzioni: ')
     food_list_name.append(food_name)
-    food_amount = float(input('Per favore, inserisci la quantità di tale alimento (g): '))
+    food_amount = float(input('Per favore, inserisci la quantità di tale alimento (g): '))/100
     food_list_amount.append(food_amount)
 
     next_action = input('Per favore, premi ENTER per continuare, altrimenti digita FATTO per andare al calcolo oppure STOP terminare: ')
 
     if next_action == fatto:
+        print(food_list_name)
+        print(food_list_amount)
         calorie_intake = DailyCalorieIntake(user_name, food_list_name, food_list_amount)
         print(f"{calorie_intake.user_name} assumerà giornalmente: ")
         print(calorie_intake.calculator())

@@ -35,6 +35,8 @@ df['Proteine (g)'] = df['Proteine (g)'].astype('float')
 df['Lipidi (g)'] = df['Lipidi (g)'].astype('float')
 df['Carboidrati (g)'] = df['Carboidrati (g)'].astype('float')
 
+df_def = df
+
 """
 print(df['KCal'].dtypes)
 print(df['Proteine (g)'].dtypes)
