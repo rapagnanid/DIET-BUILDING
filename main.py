@@ -4,13 +4,13 @@ from alimentitabella import df
 
 check_food_list = df['Alimenti'].tolist()
 
-food_name_list = []
-food_amount_list = []
+food_list_name = []
+food_list_amount = []
 
 stop = 'STOP'
 fatto = 'FATTO'
 
-name = input("Ciao, come ti chiami?: ")
+user_name = input("Ciao, come ti chiami?: ")
 
 while True:
     user_input = input("Per favore, inserisci un alimento: ")
@@ -23,24 +23,17 @@ while True:
             print("{0}".format(name))
 
     food_name = input('Per favore, inserisci nuovamente un alimento, scegliendo tra le possibili opzioni: ')
-    food_name_list.append(food_name)
+    food_list_name.append(food_name)
     food_amount = float(input('Per favore, inserisci la quantità di tale alimento (g): '))
-    food_amount_list.append(food_amount)
-
-    inputed_food_list = pd.DataFrame(
-        {'food_name': food_name_list,
-         'food_amount': food_amount_list})
+    food_list_amount.append(food_amount)
 
     next_action = input('Per favore, premi ENTER per continuare, altrimenti digita FATTO per andare al calcolo oppure STOP terminare: ')
 
     if next_action == fatto:
-        calorie_intake = DailyCalorieIntake(name)
-        print(f"{calorie_intake.name} assumerà giornalmente: ")
-        print(calorie_intake.calculator(food_name, food_amount))
-        #print(inputed_food_list.head(1000))
+        calorie_intake = DailyCalorieIntake(user_name, food_list_name, food_list_amount)
+        print(f"{calorie_intake.user_name} assumerà giornalmente: ")
+        print(calorie_intake.calculator())
         break
 
     elif next_action == stop:
         break
-
-
