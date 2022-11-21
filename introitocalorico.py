@@ -8,6 +8,11 @@ class DailyCalorieIntake:
 
     food_list_name = []
     food_list_amount = []
+
+    cal_count = []
+    carb_count = []
+    pro_count = []
+    lip_count = []
     
     calorie = []
     carboidrati = []
@@ -21,16 +26,16 @@ class DailyCalorieIntake:
 
     def calculator(self):
 
-        for i in range(len(self.food_list_name)):
-            cal_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['KCal'] * self.food_list_amount[i]
-            carb_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['Carboidrati (g)'] * self.food_list_amount[i]
-            pro_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['Proteine (g)'] * self.food_list_amount[i]
-            lip_count = df_def[df_def['Alimenti'] == self.food_list_name[i]]['Lipidi (g)'] * self.food_list_amount[i]
+        for i in range(0, len(self.food_list_name)):
+            self.cal_count[i] = df_def['KCal'][df_def['Alimenti'] == self.food_list_name[i]] * self.food_list_amount[i] / 100
+            self.carb_count[i] = df_def['Carboidrati (g)'][df_def['Alimenti'] == self.food_list_name[i]] * self.food_list_amount[i] /100
+            self.pro_count[i] = df_def['Proteine (g)'][df_def['Alimenti'] == self.food_list_name[i]] * self.food_list_amount[i] /100
+            self.lip_count[i] = df_def['Lipidi (g)'][df_def['Alimenti'] == self.food_list_name[i]] * self.food_list_amount[i] /100
 
-            calorie_totali = pd.DataFrame(self.calorie.append(cal_count)).sum(axis=0)
-            carboidrati_totali = pd.DataFrame(self.carboidrati.append(carb_count)).sum(axis=0)
-            proteine_totali = pd.DataFrame(self.proteine.append(pro_count)).sum(axis=0)
-            lipidi_totali = pd.DataFrame(self.lipidi.append(lip_count)).sum(axis=0)
+            calorie_totali = sum(self.calorie.append(self.cal_count[i]))
+            carboidrati_totali = sum(self.carboidrati.append(self.carb_count[i]))
+            proteine_totali = sum(self.proteine.append(self.pro_count[i]))
+            lipidi_totali = sum(self.lipidi.append(self.lip_count[i]))
 
 
         return pd.DataFrame({
