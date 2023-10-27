@@ -1,0 +1,65 @@
+/* Stili globali per tutte le pagine */
+body {
+    background-color: #f2f2f2;  /* Sfondo grigio chiaro */
+    color: #000;  /* Testo nero */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;  /* Font Helvetica/sans-serif */
+    text-align: center;  /* Allineamento al centro */
+    margin: 0;  /* Rimuovi il margine predefinito */
+    padding: 0;  /* Rimuovi il padding predefinito */
+}
+
+/* Titolo della pagina iniziale */
+.title {
+    font-size: 48px;  /* Dimensione del titolo grande */
+    font-weight: bold;  /* Testo in grassetto */
+    margin-top: 100px;  /* Spazio sopra il titolo */
+}
+
+/* Barra di navigazione */
+.navbar {
+    background-color: #222;  /* Colore di sfondo grigio scuro */
+    text-align: center;  /* Per centrare il testo */
+    padding: 10px 0;  /* Spazio intorno alla barra di navigazione */
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    margin: 0;  /* Rimuovi lo spazio tra gli elementi */
+}
+
+.navbar a {
+    color: #fff;  /* Colore del testo bianco */
+    text-decoration: none;  /* Rimuove la sottolineatura dei collegamenti */
+    font-size: 18px;  /* Dimensione del testo dei collegamenti (puoi regolare) */
+    display: block;  /* Disponi i collegamenti verticalmente uno sotto l'altro */
+}
+
+/* Stile per i risultati della ricerca */
+.result-table {
+    margin-top: 20px;  /* Spazio sopra la tabella dei risultati */
+    border-collapse: collapse;  /* Unisci i bordi delle celle della tabella */
+    width: 80%;  /* Larghezza della tabella */
+    margin-left: auto;  /* Allinea la tabella al centro della pagina */
+    margin-right: auto;
+}
+
+.result-table th, .result-table td {
+    border: 1px solid #000;  /* Aggiungi bordi alle celle */
+    padding: 8px;  /* Spazio interno delle celle */
+}
+
+/* Aggiungi stili specifici per altri elementi, se necessario */
+/* Sposta la casella di ricerca più in basso */
+form {
+    margin-top: 20px;  /* Aggiungi uno spazio sopra la casella di ricerca */
+}
+
+/* Sposta la tabella dei risultati più in basso */
+.result-table {
+    margin-top: 20px;  /* Aggiungi uno spazio sopra la tabella dei risultati */
+}

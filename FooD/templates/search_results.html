@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risultati della ricerca</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Ricerca Alimento</a></li>
+            <li><a href="/nutritional_advice">Consigli Alimentari</a></li>
+            <li><a href="/custom_diet_plan">Schemi Dietetici</a></li>
+            <!-- Aggiungi altri collegamenti alle sezioni del tuo sito -->
+        </ul>
+    </nav>
+    <form action="/search" method="get">
+        <input type="text" name="query" placeholder="Inserisci il nome dell'alimento in italiano" required>
+        <input type="submit" value="Cerca">
+    </form>
+
+    <table class="result-table">
+        <thead>
+            <tr>
+                <th>Nutriente</th>
+                <th>Valore</th>
+                <th>Unità</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nutrient in nutritional_data %}
+            <tr>
+                <td>{{ nutrient.nutrientName }}</td>
+                <td>{{ nutrient.value }}</td>
+                <td>{{ nutrient.unitName }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -16,41 +16,51 @@ engine = create_engine('mysql://root:Cocodemer.95@localhost/FooD')  # Sostituisc
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Crea una funzione per ottenere i dati nutrizionali di un alimento per nome
-def get_nutritional_data(food_name):
-    # Costruisci l'URL completo per la richiesta all'API
-    search_url = f"{base_url}foods/search?query={food_name}&api_key={api_key}"
+from googletrans import Translator
 
-    try:
-        # Esegui la richiesta GET all'API
-        response = requests.get(search_url)
-        response.raise_for_status()  # Controlla se la richiesta ha avuto successo
-        data = response.json()  # Estrai i dati JSON dalla risposta
+def translate_to_english(food_name):
+    translator = Translator()
+    translated = translator.translate(food_name, src='it', dest='en')
+    return translated.text
 
-        # Estrai i dati nutrizionali desiderati dalla risposta JSON
-        nutritional_data = data['foods'][0]['foodNutrients']
+def get_nutritional_data_in_real_time(food_name_italian):
+    # Traduci il nome dell'alimento in italiano in inglese
+    food_name_english = translate_to_english(food_name_italian)
 
-        # Salva i dati nel database
-        for nutrient in nutritional_data:
-            db_entry = NutritionalData(
-                food_name=food_name,
-                nutrient_name=nutrient['nutrientName'],
-                nutrient_value=nutrient['value'],
-                unit_name=nutrient['unitName']
-            )
-            session.add(db_entry)
+    # Cerca se i dati sono già presenti nel database
+    existing_data = session.query(NutritionalData).filter_by(food_name=food_name_english).all()
 
-        # Conferma le modifiche nel database
-        session.commit()
+    if existing_data:
+        # Se i dati esistono nel database, restituiscili
+        nutritional_data = [{
+            'nutrientName': entry.nutrient_name,
+            'value': entry.nutrient_value,
+            'unitName': entry.unit_name
+        } for entry in existing_data]
+    else:
+        # Se i dati non sono presenti, effettua la richiesta all'API con il nome in inglese
+        search_url = f"{base_url}foods/search?query={food_name_english}&api_key={api_key}"
 
-        return nutritional_data
+        try:
+            response = requests.get(search_url)
+            response.raise_for_status()
+            data = response.json()
 
-    except requests.exceptions.HTTPError as err:
-        print(f"Errore nella richiesta all'API: {err}")
-        return None
+            nutritional_data = data['foods'][0]['foodNutrients']
 
-# Esempio: ottieni i dati nutrizionali per una mela e salvali nel database
-nutritional_data = get_nutritional_data("apple")
-if nutritional_data:
-    for nutrient in nutritional_data:
-        print(f"{nutrient['nutrientName']}: {nutrient['value']} {nutrient['unitName']}")
+            # Salva i dati nel database con il nome in inglese
+            for nutrient in nutritional_data:
+                db_entry = NutritionalData(
+                    food_name=food_name_english,
+                    nutrient_name=nutrient['nutrientName'],
+                    nutrient_value=nutrient['value'],
+                    unit_name=nutrient['unitName']
+                )
+                session.add(db_entry)
+
+            session.commit()
+        except requests.exceptions.HTTPError as err:
+            print(f"Errore nella richiesta all'API: {err}")
+            nutritional_data = []
+
+    return nutritional_data

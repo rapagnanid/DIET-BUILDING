@@ -8,7 +8,8 @@ class NutritionalData(Base):
     __tablename__ = 'nutritional_data'
 
     id = Column(Integer, primary_key=True)
-    food_name = Column(String)
-    nutrient_name = Column(String)
+    food_name = Column(String(255))  # Sostituisci 255 con la lunghezza desiderata
+    nutrient_name = Column(String(255))  # Sostituisci 255 con la lunghezza desiderata
     nutrient_value = Column(Float)
-    unit_name = Column(String)
+    unit_name = Column(String(255))  # Sostituisci 255 con la lunghezza desiderata
+
