@@ -9,8 +9,14 @@ def create_database():
         CREATE TABLE IF NOT EXISTS scraped_data (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
-            type TEXT,
-            muscle TEXT
+            overview TEXT,
+            category TEXT,
+            muscle TEXT,
+            equipment TEXT,
+            level TEXT,
+            rating TEXT,
+            description TEXT,
+            alternative TEXT
         )
     ''')
 

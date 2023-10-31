@@ -17,3 +17,7 @@ if __name__ == '__main__':
         print(f'name: {row[1]}')
         print(f'type: {row[2]}')
         print(f'muscle: {row[3]}')
+        print(f'rating: {row[4]}')
+        print(f'description: {row[5]}')
+        print(f'level: {row[6]}')
+        print(f'alternative: {row[7]}')
